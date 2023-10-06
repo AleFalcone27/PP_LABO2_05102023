@@ -40,14 +40,14 @@ namespace Ejercicio_Integrador
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.rdbBinario = new System.Windows.Forms.RadioButton();
             this.rdbDecimal = new System.Windows.Forms.RadioButton();
-            this.operacion = new System.Windows.Forms.ComboBox();
+            this.cmbOperacion = new System.Windows.Forms.ComboBox();
             this.btnOperar = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtPrimerOperador = new System.Windows.Forms.TextBox();
             this.txtResultado = new System.Windows.Forms.Label();
-            this.HistListBox = new System.Windows.Forms.ListBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lstHistorial = new System.Windows.Forms.ListBox();
+            this.lblHistorial = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,17 +149,17 @@ namespace Ejercicio_Integrador
             this.rdbDecimal.UseVisualStyleBackColor = false;
             this.rdbDecimal.CheckedChanged += new System.EventHandler(this.rdbDecimal_CheckedChanged);
             // 
-            // operacion
+            // cmbOperacion
             // 
-            this.operacion.BackColor = System.Drawing.SystemColors.Window;
-            this.operacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.operacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.operacion.ForeColor = System.Drawing.Color.Black;
-            this.operacion.FormattingEnabled = true;
-            this.operacion.Location = new System.Drawing.Point(191, 206);
-            this.operacion.Name = "operacion";
-            this.operacion.Size = new System.Drawing.Size(105, 32);
-            this.operacion.TabIndex = 1;
+            this.cmbOperacion.BackColor = System.Drawing.SystemColors.Window;
+            this.cmbOperacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOperacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.cmbOperacion.ForeColor = System.Drawing.Color.Black;
+            this.cmbOperacion.FormattingEnabled = true;
+            this.cmbOperacion.Location = new System.Drawing.Point(191, 206);
+            this.cmbOperacion.Name = "cmbOperacion";
+            this.cmbOperacion.Size = new System.Drawing.Size(105, 32);
+            this.cmbOperacion.TabIndex = 1;
             // 
             // btnOperar
             // 
@@ -202,7 +202,7 @@ namespace Ejercicio_Integrador
             this.txtPrimerOperador.Name = "txtPrimerOperador";
             this.txtPrimerOperador.Size = new System.Drawing.Size(158, 30);
             this.txtPrimerOperador.TabIndex = 0;
-            this.txtPrimerOperador.TextChanged += new System.EventHandler(this.txtPrimerOperador_TextChanged);
+
             // 
             // txtResultado
             // 
@@ -215,25 +215,25 @@ namespace Ejercicio_Integrador
             this.txtResultado.Size = new System.Drawing.Size(0, 31);
             this.txtResultado.TabIndex = 8;
             // 
-            // HistListBox
+            // lstHistorial
             // 
-            this.HistListBox.FormattingEnabled = true;
-            this.HistListBox.Location = new System.Drawing.Point(506, 67);
-            this.HistListBox.Name = "HistListBox";
-            this.HistListBox.Size = new System.Drawing.Size(247, 212);
-            this.HistListBox.TabIndex = 9;
+            this.lstHistorial.FormattingEnabled = true;
+            this.lstHistorial.Location = new System.Drawing.Point(506, 67);
+            this.lstHistorial.Name = "lstHistorial";
+            this.lstHistorial.Size = new System.Drawing.Size(247, 212);
+            this.lstHistorial.TabIndex = 9;
             // 
-            // label5
+            // lblHistorial
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.LightGray;
-            this.label5.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label5.Location = new System.Drawing.Point(540, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(159, 31);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "HISTORIAL";
+            this.lblHistorial.AutoSize = true;
+            this.lblHistorial.BackColor = System.Drawing.Color.LightGray;
+            this.lblHistorial.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.lblHistorial.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.lblHistorial.Location = new System.Drawing.Point(540, 22);
+            this.lblHistorial.Name = "lblHistorial";
+            this.lblHistorial.Size = new System.Drawing.Size(159, 31);
+            this.lblHistorial.TabIndex = 10;
+            this.lblHistorial.Text = "HISTORIAL";
             // 
             // FrmCalculadora
             // 
@@ -241,14 +241,14 @@ namespace Ejercicio_Integrador
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(765, 291);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.HistListBox);
+            this.Controls.Add(this.lblHistorial);
+            this.Controls.Add(this.lstHistorial);
             this.Controls.Add(this.txtResultado);
             this.Controls.Add(this.txtPrimerOperador);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.btnOperar);
-            this.Controls.Add(this.operacion);
+            this.Controls.Add(this.cmbOperacion);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtSegundoOperador);
@@ -282,15 +282,15 @@ namespace Ejercicio_Integrador
         private TextBox txtPrimerOperador;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox;
-        private System.Windows.Forms.ComboBox operacion;
+        private System.Windows.Forms.ComboBox cmbOperacion;
         private System.Windows.Forms.RadioButton rdbDecimal;
         private System.Windows.Forms.RadioButton rdbBinario;
         private System.Windows.Forms.Button btnOperar;
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.Button btnLimpiar;
         private Label txtResultado;
-        private ListBox HistListBox;
-        private Label label5;
+        private ListBox lstHistorial;
+        private Label lblHistorial;
     }
 }
 

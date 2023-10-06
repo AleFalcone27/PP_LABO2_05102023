@@ -5,206 +5,75 @@ using System.Net.Sockets;
 
 namespace Entidades
 {
-    public class Numeracion
+    public abstract class Numeracion
     {
+        static string msgError;
+        protected string valor;
 
-        //Atribtos 
-
-        private ESistema sistema;
-        private double valorNumerico;
-
-        //Propiedades
-
-        public ESistema Sistema { get { return this.sistema; } }
-        public string Valor { get { return this.valorNumerico.ToString(); } }
-
-
-        // Constructores
-
-        public Numeracion(double valor, ESistema sistema)
+        private Numeracion()
         {
-            InicializarValores(valor.ToString(), sistema);
+            Numeracion.msgError = "Número Invalido";
         }
 
-        public Numeracion(string valor, ESistema sistema)
+        protected Numeracion(string valor)
         {
-            InicializarValores(valor, sistema);
+            InicializaValor(valor);
         }
 
-        //Métodos
+        public string Valor
+        {
+            get { return this.valor; }
+        }
+
+        abstract internal double ValorNumerico { get; }
+
+        public abstract Numeracion CambiarSistemaDeNumeracion(ESistema sistema);
 
         /// <summary>
-        /// Convierte en caso de ser necesario, en base al sistema recibido por parámetros, un objeto Numeracion de decimal a binario
-        /// </summary>
-        /// <param name="Sistema"> Sistema númerico al cual queremos convertir nuestra instancia de Nuemracion</param>
-        /// <returns>El objeto Numeración conertido a binario, caso contrario su Valor</returns>
-        public string ConvertirA(ESistema Sistema)
-        {
- 
-            if (Sistema == ESistema.Binario)
-            {
-                // Si es decimal y lo queres convertir a binario
-                return this.DecimalABinario(this.Valor);
-            }
-            else
-            {
-                return this.Valor;
-            }
-
-        }
-
-        /// <summary>
-        /// Inicializa los valores del objeto y Si el valor recibido es un binario, lo convertirá a decimal antes de
-        /// guardarlo, de lo contrario verificará que sea un numero decimal.
+        /// Verificara que la cadena recibida no sea nula o con espacios en blanco.
         /// </summary>
         /// <param name="valor"></param>
-        /// <param name="sistema"></param>
-        private void InicializarValores(string valor, ESistema sistema)
-        {
-            if (!string.IsNullOrEmpty(valor) && sistema == ESistema.Binario)
-            {
-                this.valorNumerico = this.BinarioADecimal(valor);
-            }
-            else if (double.TryParse(valor, out double dec))
-            {
-                this.valorNumerico = dec;
-            }
-            else this.valorNumerico = double.MinValue;
-
-        }
-
-
-        /// <summary>
-        /// Valida que la cadena recibida por parametros este compuesta SOLO por "0" y "1".
-        /// </summary>
-        /// <param name="valor"></param>
-        /// <returns>Verdadero, si se cumple la condición. De lo contrario falso</returns>
-        private bool EsBinario(string valor)
-        {
-            foreach (var c in valor)
-            {
-                if (c.ToString() != "0" || c.ToString() != "1")
-                {
-                    return false;
-                }
-                else return true;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Convierte en caso de ser necesario, el entero recibido por parámetros a binario
-        /// </summary>
-        /// <param name="valor">Valor a convertir</param>
         /// <returns></returns>
-        private string DecimalABinario(int valor)
+        protected virtual bool EsNumeracionValida(string valor)
         {
-            if (valor == 0)
-            {
-                return "0"; 
-            }
-            string resultado = "";
-
-            while (valor > 0)
-            {
-                int residuo = valor % 2;
-                resultado = residuo + resultado;
-                valor = valor / 2;
-            }
-            return resultado;
+            return !String.IsNullOrWhiteSpace(valor);
         }
 
 
         /// <summary>
-        /// Convierte en caso de ser necesario, el string recibido por parámetros a binario
-        /// </summary>
-        /// <param name="valor">Valor a convertir, o un string representando que el string recibido por parámetros no es válido</param>
-        /// <returns></returns>
-        private string DecimalABinario(string valor)
-        {
-            if(int.TryParse(valor, out int valorInt))
-            {
-                if (valorInt == 0)
-                {
-                    return "0";
-                }
-
-                string resultado = "";
-
-                while (valorInt > 0)
-                {
-                    int residuo = valorInt % 2;
-                    resultado = residuo + resultado;
-                    valorInt = valorInt / 2;
-                }
-                  return resultado;
-            }
-            else  return "Número inválido"; 
-        }
-
-
-        /// <summary>
-        /// Valida que valor sea un numero binario
+        /// validará que el valor
+        ///  recibido sea una numeración valida, de lo contrario el atributo
+        ///  almacenará un mensaje de error.
         /// </summary>
         /// <param name="valor"></param>
-        /// <returns>El número binario casteado a double, caso contrario 0</returns>
-        private double BinarioADecimal(string valor)
+        private void InicializaValor(string valor)
         {
-            if (EsBinario(valor))
+            if (EsNumeracionValida(valor))
             {
-                int resultado = 0;
-                int longitud = valor.Length;
-
-                for (int i = 0; i < longitud; i++)
-                {
-                    int digito = int.Parse(valor[i].ToString());
-                    int posicion = longitud - i - 1;
-                    resultado += digito * (int)Math.Pow(2, posicion);
-                }
-                return resultado;
+                this.valor = valor;
             }
-            return 0;
+            else this.valor = "msgError";
         }
 
-
-        //Sobrecarga de operadores de comparación
 
         public static bool operator ==(Numeracion n1, Numeracion n2)
         {
-            return n1.sistema == n2.sistema;
+            return ((n1.GetType() == n2.GetType()) && (n1 != null && n2 != null)); 
         }
 
         public static bool operator !=(Numeracion n1, Numeracion n2)
         {
-            return n1.sistema != n2.sistema;
+            return (n1 != null && n2 != null);
         }
 
-        public static bool operator ==(ESistema s, Numeracion n)
+        public static explicit operator double(Numeracion numeracion)
         {
-            return n.sistema == s;
-        }
-        public static bool operator !=(ESistema s, Numeracion n)
-        {
-            return n.sistema != s;
+            return numeracion.ValorNumerico;
         }
 
-        //Sobrecarga de operadores aritméticos
-        public static double operator +(Numeracion n1, Numeracion n2)
+        public static implicit operator Numeracion(double v)
         {
-            return n1.valorNumerico + n2.valorNumerico;
+            throw new NotImplementedException();
         }
-        public static double operator -(Numeracion n1, Numeracion n2)
-        {
-            return n1.valorNumerico - n2.valorNumerico;
-        }
-        public static double operator /(Numeracion n1, Numeracion n2)
-        {
-            return n1.valorNumerico / n2.valorNumerico;
-        }
-        public static double operator *(Numeracion n1, Numeracion n2)
-        {
-            return n1.valorNumerico * n2.valorNumerico;
-        }
-
     }
 }

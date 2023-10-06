@@ -6,15 +6,13 @@ namespace Ejercicio_Integrador
 {
     public partial class FrmCalculadora : Form
     {
-        Operacion calculadora;
-        Numeracion primerOperando;
-        Numeracion segundoOperando;
-        Numeracion resultado;
-        ESistema sistema;
+
+        private Calculadora calculadora;
 
         public FrmCalculadora()
         {
             InitializeComponent();
+            this.calculadora = new Calculadora("Falcone Alejo");
         }
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace Ejercicio_Integrador
         private void FrmCalculadora_Load(object sender, EventArgs e)
         {
             this.rdbDecimal.Checked = true;
-            this.operacion.DataSource = new object[] {"", "+", "-", "/", "*"};
+            this.cmbOperacion.DataSource = new object[] {"", "+", "-", "/", "*"};
         }
 
         /// <summary>
@@ -35,12 +33,11 @@ namespace Ejercicio_Integrador
         /// <param name="e"></param>
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            this.txtPrimerOperador.Clear();
-            this.txtSegundoOperador.Clear();
-            this.operacion.Text = "";
-            this.txtResultado.Text = "";
-            this.HistListBox.Items.Clear(); 
-            resultado = null;
+            this.calculadora.EliminarHistorialDeOperaciones();
+            this.txtPrimerOperador.Text = string.Empty;
+            this.txtSegundoOperador.Text = string.Empty;
+            this.txtResultado.Text = $"Resultado:";
+            this.MostrarHistorial();
         }
 
 
@@ -57,8 +54,24 @@ namespace Ejercicio_Integrador
         /// <param name="e"></param>
         private void txtPrimerOperador_TextChanged(object sender, EventArgs e)
         {
-            this.primerOperando = new Numeracion(txtPrimerOperador.Text, ESistema.Decimal);
+        
         }
+
+        private Numeracion GetOperador(string value)
+        {
+            if (Calculadora.Sistema == ESistema.Binario)
+            {
+                return new SistemaBinario(value);
+            }
+            else return new SistemaDecimal(value);
+        }
+
+
+        private void MostrarHistorial()
+        {
+
+        }
+
 
         /// <summary>
         /// Obtenemos el valor ingresado en el campo del segundo operando.
@@ -67,7 +80,7 @@ namespace Ejercicio_Integrador
         /// <param name="e"></param>
         private void txtSegundoOperador_TextChanged(object sender, EventArgs e)
         {
-            this.segundoOperando = new Numeracion(txtSegundoOperador.Text, ESistema.Decimal);
+         
         }
 
         /// <summary>
@@ -78,16 +91,22 @@ namespace Ejercicio_Integrador
         /// <param name="e"></param>
         private void btnOperar_Click(object sender, EventArgs e)
         {
+
+            char operador;
+            bool verificacion;
+            calculadora.PrimerOperando = this.GetOperador(this.txtPrimerOperador.Text);
+            calculadora.SegunddoOperando = this.GetOperador(this.txtPrimerOperador.Text);
+            verificacion = char.TryParse(cmbOperacion.Text, out operador);
+            this.calculadora.Calcular(operador);
+            this.calculadora.ActualizarHistorialDeOperaciones(operador);
+            this.txtResultado.Text = $"Resultado:{ calculadora.Resultado.Valor}";this.MostrarHistorial();
+
+
+
+
             if (!String.IsNullOrEmpty(txtSegundoOperador.Text) || !String.IsNullOrEmpty(txtSegundoOperador.Text))
             {
-                calculadora = new Operacion(primerOperando, segundoOperando);
-
-                if (String.IsNullOrEmpty(operacion.Text))
-                {
-                    //Forzamos la entrada al default del switch.
-                    this.resultado = calculadora.Operar('1');
-                }
-                else this.resultado = calculadora.Operar(char.Parse(operacion.Text));
+                
 
                 SetResultado();
 
@@ -106,7 +125,7 @@ namespace Ejercicio_Integrador
         /// <param name="e"></param>
         private void rdbDecimal_CheckedChanged(object sender, EventArgs e)
         {
-            this.sistema = ESistema.Decimal;
+            Calculadora.Sistema = ESistema.Decimal;
         }
 
         /// <summary>
@@ -116,7 +135,7 @@ namespace Ejercicio_Integrador
         /// <param name="e"></param>
         private void rdbBinario_CheckedChanged(object sender, EventArgs e)
         {
-            this.sistema = ESistema.Binario;
+            Calculadora.Sistema = ESistema.Binario;
         }
 
         /// <summary>
@@ -124,13 +143,7 @@ namespace Ejercicio_Integrador
         /// </summary>
         private void SetResultado()
         {
-            if (this.sistema == ESistema.Binario)
-            {
-                txtResultado.Text = (this.resultado.ConvertirA(ESistema.Binario).ToString());
-            }
-            else txtResultado.Text = resultado.Valor;
-           
-            HistListBox.Items.Add(txtResultado.Text);
+
         }
 
         /// <summary>

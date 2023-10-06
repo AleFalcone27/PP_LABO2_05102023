@@ -22,3 +22,9 @@ C:\Users\aleef\OneDrive\Escritorio\Primer Parcial Labo\Entidades\Entidades\obj\D
 C:\Users\aleef\OneDrive\Escritorio\Primer Parcial Labo\Entidades\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
 C:\Users\aleef\OneDrive\Escritorio\Primer Parcial Labo\Entidades\Entidades\obj\Debug\Entidades.dll
 C:\Users\aleef\OneDrive\Escritorio\Primer Parcial Labo\Entidades\Entidades\obj\Debug\Entidades.pdb
+C:\Users\aleef\OneDrive\Escritorio\PP_LABO2_05102023\Entidades\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\aleef\OneDrive\Escritorio\PP_LABO2_05102023\Entidades\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\aleef\OneDrive\Escritorio\PP_LABO2_05102023\Entidades\Entidades\obj\Debug\Entidades.dll
+C:\Users\aleef\OneDrive\Escritorio\PP_LABO2_05102023\Entidades\Entidades\obj\Debug\Entidades.pdb
+C:\Users\aleef\OneDrive\Escritorio\PP_LABO2_05102023\Entidades\Entidades\bin\Debug\Entidades.dll
+C:\Users\aleef\OneDrive\Escritorio\PP_LABO2_05102023\Entidades\Entidades\bin\Debug\Entidades.pdb
