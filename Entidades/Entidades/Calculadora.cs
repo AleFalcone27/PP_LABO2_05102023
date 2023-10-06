@@ -93,7 +93,7 @@ namespace Entidades
 
         public void Calcular(char operador)
         {
-            if ((this.primerOperando != null && this.segundoOperando != null) && (this.primerOperando == this.segundoOperando))
+            if ((this.primerOperando != null && this.segundoOperando != null))
             {
                 switch (operador)
                 {

@@ -56,15 +56,15 @@ namespace Entidades
         }
 
 
-        public static bool operator ==(Numeracion n1, Numeracion n2)
-        {
-            return ((n1.GetType() == n2.GetType()) && (n1 != null && n2 != null)); 
-        }
+        //public static bool operator ==(Numeracion n1, Numeracion n2)
+        //{
+        //    return ((n1.GetType() == n2.GetType()) && (n1 != null && n2 != null)); 
+        //}
 
-        public static bool operator !=(Numeracion n1, Numeracion n2)
-        {
-            return (n1 != null && n2 != null);
-        }
+        //public static bool operator !=(Numeracion n1, Numeracion n2)
+        //{
+        //    return ((n1.GetType() != n2.GetType()) && (n1 != null && n2 != null));
+        //}
 
         public static explicit operator double(Numeracion numeracion)
         {
@@ -76,4 +76,5 @@ namespace Entidades
             throw new NotImplementedException();
         }
     }
+ 
 }
